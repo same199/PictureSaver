@@ -10,15 +10,24 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let saveLoadManager = SaveLoadManager()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let controller = ViewController()
+        //let controller = ViewController()
+        let startController: UIViewController
         
-        let navigationController = UINavigationController(rootViewController: controller)
+        if saveLoadManager.load(for: .pin) == nil {
+                // Первый запуск — создаём PIN
+            startController = CreatePasswordViewController()
+            } else {
+                // PIN уже есть — ввод PIN
+                startController = EnterPasswordViewController()
+            }
+        
+        let navigationController = UINavigationController(rootViewController: startController)
         navigationController.setNavigationBarHidden(true, animated: false)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
