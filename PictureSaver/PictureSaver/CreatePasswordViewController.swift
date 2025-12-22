@@ -349,8 +349,14 @@ class CreatePasswordViewController: UIViewController {
         }
     }
     @objc private func clearButtonTapped(_ sender: UIButton) {
+        
+        step = .create
+        firstPin = ""
+        enteredPin = ""
+        hiddenConfirmPin()
         defaultPinState()
-        updatePinLabels()
+        //defaultPinState()
+        //updatePinLabels()
     }
     
     @objc private func okButtonTapped(_ sender: UIButton) {
@@ -386,11 +392,9 @@ class CreatePasswordViewController: UIViewController {
     }
     
     private func defaultPinState(){
-        enteredPin = ""
         pinLabel.text = AppStrings.defaultPinTextState.rawValue
-        pinLabelText.text = AppStrings.enterPinText.rawValue
-        pinLabelText.textColor = .white
         pinLabelText.text = AppStrings.createNewPin.rawValue
+        pinLabelText.textColor = .white
     }
     
     private func createAndConfirmPin() {
@@ -405,6 +409,7 @@ class CreatePasswordViewController: UIViewController {
                 pinIsCorrect()
             } else {
                 pinIsIncorrect()
+                hiddenConfirmPin()
             }
         }
     }
