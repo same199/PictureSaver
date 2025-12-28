@@ -23,7 +23,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let twoButton: UIButton = {
@@ -32,7 +32,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let threeButton: UIButton = {
@@ -41,7 +41,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let fourButton: UIButton = {
@@ -50,7 +50,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let fiveButton: UIButton = {
@@ -59,7 +59,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let sixButton: UIButton = {
@@ -68,7 +68,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let sevenButton: UIButton = {
@@ -77,7 +77,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let eightButton: UIButton = {
@@ -86,7 +86,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let nineButton: UIButton = {
@@ -95,7 +95,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let zeroButton: UIButton = {
@@ -104,7 +104,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
     }()
     private let clearButton: UIButton = {
@@ -113,7 +113,7 @@ class EnterPasswordViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = ElementsColors.clearButtonColor.color
         return button
     }()
     
@@ -122,7 +122,7 @@ class EnterPasswordViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .white
+        label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.defaultPinTextState.rawValue
         return label
     }()
@@ -130,7 +130,7 @@ class EnterPasswordViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 24)
-        label.textColor = .white
+        label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.enterPinText.rawValue
         return label
     }()
@@ -142,7 +142,7 @@ class EnterPasswordViewController: UIViewController {
     
     //MARK: configure UI
     private func configureUI(){
-        view.backgroundColor = .black
+        view.backgroundColor = ElementsColors.backgroundColor.color
         
         view.addSubview(numberContainer)
         
@@ -330,18 +330,18 @@ class EnterPasswordViewController: UIViewController {
             pinIsIncorrect()}
     }
     private func pinIsCorrect(){
-        pinLabelText.textColor = .green
+        pinLabelText.textColor = ElementsColors.correctPinTextColor.color
         pinLabelText.text = AppStrings.pinCorrect.rawValue
     }
     private func pinIsIncorrect(){
-        pinLabelText.textColor = .red
+        pinLabelText.textColor = ElementsColors.incorrectPinTextColor.color
         pinLabelText.text = AppStrings.pinNotCorrect.rawValue
     }
     private func defaultPinState(){
         enteredPin = ""
         pinLabel.text = AppStrings.defaultPinTextState.rawValue
         pinLabelText.text = AppStrings.enterPinText.rawValue
-        pinLabelText.textColor = .white
+        pinLabelText.textColor = ElementsColors.pinTextColor.color
         pinLabelText.text = AppStrings.enterPinText.rawValue
     }
     

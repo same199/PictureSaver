@@ -10,6 +10,7 @@ import UIKit
 
 enum Keys: String {
     case pin
+    case imageName
 }
 
 
@@ -24,36 +25,37 @@ final class SaveLoadManager {
     func load(for key:Keys) -> String? {
         return defaults.string(forKey: key.rawValue)
     }
-//    func saveImage(image: UIImage) -> String?{
-//        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-//        
-//        let filename = UUID().uuidString
-//        let fileDirectory = directory.appendingPathComponent(filename)
-//        
-//        guard let data = image.pngData() else {return nil}
-//        
-//        do {
-//            try data.write(to: fileDirectory)
-//            return filename
-//        }
-//        catch let error{
-//            print(error.localizedDescription)
-//            return nil
-//        }
-//    }
-//    
-//    func loadImage (filename: String) -> UIImage? {
-//        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-//        let fileURL = directory.appendingPathComponent(filename)
-//        return UIImage(contentsOfFile: fileURL.path)
-//    }
-//    
-//    func saveImageName(_ text: String) {
-//        defaults.set(text, forKey: Keys.imageName.rawValue)
-//    }
-//    
-//    func loadImageName() -> String? {
-//        defaults.string(forKey:  Keys.imageName.rawValue)
-//    }
+    
+    func saveImage(image: UIImage) -> String?{
+        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        let filename = UUID().uuidString + ".png"
+        let fileDirectory = directory.appendingPathComponent(filename)
+        guard let data = image.pngData() else {return nil}
+        do {
+            try data.write(to: fileDirectory)
+            //saveImageName(filename)
+            return filename
+        }
+        catch let error{
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    func loadImage (filename: String) -> UIImage? {
+        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        let fileURL = directory.appendingPathComponent(filename)
+        return UIImage(contentsOfFile: fileURL.path)
+    }
+    
+     func saveImageName(_ name: String) {
+        var images = defaults.stringArray(forKey: Keys.imageName.rawValue) ?? []
+        images.append(name)
+        defaults.set(images, forKey: Keys.imageName.rawValue)
+    }
+    
+    func loadImageName() -> [String] {
+        defaults.stringArray(forKey:  Keys.imageName.rawValue) ?? []
+    }
 }
 
