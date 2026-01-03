@@ -64,8 +64,6 @@ public enum Offsets: CGFloat {
     case offsetBetweenTextAndPin = 12
     case offsetBetweenNewAndConfirmPin = 60
     case textFieldLeftAndRightOffset = 36
-    
-    
 }
 
 public enum PinCreationStep {
@@ -115,6 +113,8 @@ public enum ElementsColors {
 public enum ImageViewParams: CGFloat{
     case widthAndHeightBeforeAddPicture = 84
     case widthAndHeightAfterAddPicture = 260
+    case showBigPicrureWidth = 300
+    case showBigPicrureHeight = 448
 }
 
 public enum TextFieldParams: CGFloat{

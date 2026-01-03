@@ -12,6 +12,8 @@ import SnapKit
 class AllPictureViewController: UIViewController {
     
     private let saveLoadManager = SaveLoadManager()
+    private var imageNamesArray: [String] = []
+    private var currentIndex: Int = 0
     private let containerView = UIView()
     private let buttonsContainer = UIView()
     private let backButton: UIButton = {
@@ -22,7 +24,6 @@ class AllPictureViewController: UIViewController {
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
     }()
-    
     private let allPictureScreenName: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -40,7 +41,6 @@ class AllPictureViewController: UIViewController {
         imageView.backgroundColor = ElementsColors.addPictureButtonColor.color
         return imageView
     }()
-    
     private let infoAboutPictureTextField : UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
@@ -70,20 +70,20 @@ class AllPictureViewController: UIViewController {
         return button
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureNotifications()
-        
     }
+    
     private func configureUI() {
+        imageNamesArray = saveLoadManager.loadImageName()
         view.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        containerView.backgroundColor = ElementsColors.backgroundColor.color
         
+        containerView.backgroundColor = ElementsColors.backgroundColor.color
         containerView.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(ButtonsParams.allPicturesButtonHorizontalSpacing.rawValue)
@@ -91,28 +91,24 @@ class AllPictureViewController: UIViewController {
             make.width.height.equalTo(ButtonsParams.backButtonSize.rawValue)
         }
         backButton.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
-        
         containerView.addSubview(allPictureScreenName)
         allPictureScreenName.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalTo(backButton)
         }
-        
         containerView.addSubview(pictureView)
         pictureView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(ImageViewParams.widthAndHeightAfterAddPicture.rawValue)
         }
-        let imageNames = saveLoadManager.loadImageName()
-        if imageNames.isEmpty{
+        if imageNamesArray.isEmpty{
             pictureView.image = UIImage(named: "emptyLibrary")
         }else
-        if let lastImageName = imageNames.last,
-           let image = saveLoadManager.loadImage(filename: lastImageName) {
-            pictureView.image = image
+        {
+            currentIndex = imageNamesArray.count - 1 // стартуем с последней
+            showImage(at: currentIndex)
+            
         }
-        
-        
         containerView.addSubview(infoAboutPictureTextField)
         infoAboutPictureTextField.snp.makeConstraints { make in
             make.top.equalTo(pictureView.snp.bottom).offset(Offsets.bottomOffset.rawValue)
@@ -124,14 +120,14 @@ class AllPictureViewController: UIViewController {
         infoAboutPictureTextField.delegate = self
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboardTap))
         containerView.addGestureRecognizer(tapRecognizer)
-        //        setupGestures() 
-        
+
         containerView.addSubview(buttonsContainer)
         buttonsContainer.snp.makeConstraints { make in
             make.top.equalTo(infoAboutPictureTextField.snp.bottom).offset(Offsets.bottomOffset.rawValue)
             make.left.equalToSuperview().offset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.centerX.equalTo(pictureView)
+            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
         }
         buttonsContainer.addSubview(previousPictureButton)
         previousPictureButton.snp.makeConstraints { make in
@@ -139,25 +135,26 @@ class AllPictureViewController: UIViewController {
             make.width.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidth.rawValue)
             make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
         }
+        previousPictureButton.addTarget(self, action: #selector(previousPictureTapped),for: .touchUpInside)
         buttonsContainer.addSubview(nextPictureButton)
         nextPictureButton.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.width.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidth.rawValue)
             make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
         }
-        
+        nextPictureButton.addTarget(self, action: #selector(nextPictureTapped),for: .touchUpInside)
     }
     
     private func goBack(){
-        navigationController?.popViewController(animated: true)
-    }
+        let imageName = imageNamesArray[currentIndex]
+        saveLoadManager.savePictureText(infoAboutPictureTextField.text ?? "", for: imageName)
+            navigationController?.popViewController(animated: true)
+        }
+    
     @objc private func backButtonTapped(_ sender: UIButton) {
         goBack()
     }
-    //    private func setupGestures() {
-    //        let gesture = UITapGestureRecognizer(target: self, action: #selector(pictureViewTap))
-    //        pictureView.addGestureRecognizer(gesture)
-    //    }
+    
     private func configureNotifications(){
         NotificationCenter.default.addObserver(
             self,
@@ -200,10 +197,30 @@ class AllPictureViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    @objc private func nextPictureTapped() {
+        guard currentIndex < imageNamesArray.count - 1 else { return }
+        currentIndex += 1
+        showImage(at: currentIndex)
+    }
+    
+    @objc private func previousPictureTapped() {
+        guard currentIndex > 0 else { return }
+        currentIndex -= 1
+        showImage(at: currentIndex)
+    }
+    private func showImage(at index: Int) {
+        guard index >= 0, index < imageNamesArray.count else { return }
+        let imageName = imageNamesArray[index]
+        if let image = saveLoadManager.loadImage(filename: imageName) {
+            pictureView.image = image
+            infoAboutPictureTextField.text =
+                    saveLoadManager.loadPictureText(for: imageName)
+        }
+    }
 }
 
 extension AllPictureViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         textField.endEditing(true)
         return true

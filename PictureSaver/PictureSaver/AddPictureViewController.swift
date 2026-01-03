@@ -124,6 +124,7 @@ class AddPictureViewController: UIViewController {
         if let image = selectedImage {
             if let savedFileName = saveLoadManager.saveImage(image: image) {
                 saveLoadManager.saveImageName(savedFileName)
+                saveLoadManager.savePictureText(infoAboutPictureTextField.text ?? "", for: savedFileName)
             }
         }
         navigationController?.popViewController(animated: true)

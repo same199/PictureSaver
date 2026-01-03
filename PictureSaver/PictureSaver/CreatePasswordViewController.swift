@@ -171,9 +171,7 @@ class CreatePasswordViewController: UIViewController {
     //MARK: configure UI
     private func configureUI(){
         view.backgroundColor = ElementsColors.backgroundColor.color
-        
         view.addSubview(numberContainer)
-        
         numberContainer.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Offsets.bottomOffset.rawValue)
@@ -314,8 +312,8 @@ class CreatePasswordViewController: UIViewController {
         }
         fourLineOfNumbers.addSubview(zeroButton)
         zeroButton.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(ButtonsParams.buttonSize.rawValue)
+            make.center.equalToSuperview()
+            make.size.equalTo(ButtonsParams.buttonSize.rawValue)
         }
         zeroButton.addTarget(self, action: #selector(numberButtonTapped(_:)), for: .touchUpInside)
         fourLineOfNumbers.addSubview(clearButton)
@@ -332,8 +330,6 @@ class CreatePasswordViewController: UIViewController {
             make.centerX.equalTo(nineButton)
         }
         confirmPin.addTarget(self, action: #selector(okButtonTapped(_:)), for: .touchUpInside)
-    
-        
     }
     
     @objc private func numberButtonTapped(_ sender: UIButton) {
@@ -348,6 +344,7 @@ class CreatePasswordViewController: UIViewController {
             createAndConfirmPin()
         }
     }
+    
     @objc private func clearButtonTapped(_ sender: UIButton) {
         
         step = .create
@@ -371,14 +368,14 @@ class CreatePasswordViewController: UIViewController {
     private let maxPinLength = PinLength.four.rawValue
     private func updatePinLabels() {
         switch step {
-            case .create:
-                pinLabel.text = maskedText(for: enteredPin.count)
-
-            case .confirm:
-                pinLabel.text = maskedText(for: firstPin.count)
-                confirmPinLabel.isHidden = false
-                confirmPinLabel.text = maskedText(for: enteredPin.count)
-            }
+        case .create:
+            pinLabel.text = maskedText(for: enteredPin.count)
+            
+        case .confirm:
+            pinLabel.text = maskedText(for: firstPin.count)
+            confirmPinLabel.isHidden = false
+            confirmPinLabel.text = maskedText(for: enteredPin.count)
+        }
     }
     
     private func pinIsCorrect(){
@@ -426,5 +423,4 @@ class CreatePasswordViewController: UIViewController {
         confirmPinLabel.isHidden = true
         pinLabelConfirmText.isHidden = true
     }
-    
-    }
+}

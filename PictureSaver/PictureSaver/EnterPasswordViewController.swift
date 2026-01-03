@@ -321,6 +321,7 @@ class EnterPasswordViewController: UIViewController {
             break
         }
     }
+    
     private func checkPin() {
         let setPin = saveLoadManager.load(for: .pin)
         if enteredPin == setPin {
@@ -329,14 +330,17 @@ class EnterPasswordViewController: UIViewController {
         else {
             pinIsIncorrect()}
     }
+    
     private func pinIsCorrect(){
         pinLabelText.textColor = ElementsColors.correctPinTextColor.color
         pinLabelText.text = AppStrings.pinCorrect.rawValue
     }
+    
     private func pinIsIncorrect(){
         pinLabelText.textColor = ElementsColors.incorrectPinTextColor.color
         pinLabelText.text = AppStrings.pinNotCorrect.rawValue
     }
+    
     private func defaultPinState(){
         enteredPin = ""
         pinLabel.text = AppStrings.defaultPinTextState.rawValue
@@ -349,8 +353,8 @@ class EnterPasswordViewController: UIViewController {
         let controller = MainScreenViewController()
         navigationController?.pushViewController(controller, animated: true)
     }
-    }
-    
+}
+
 
 
 
