@@ -16,14 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        //let controller = ViewController()
         let startController: UIViewController
-        
-        if saveLoadManager.load(for: .pin) == nil {
-                // Первый запуск — создаём PIN
+
+        if saveLoadManager.loadPinFromKeychain(for: .pin) == nil {
             startController = CreatePasswordViewController()
             } else {
-                // PIN уже есть — ввод PIN
                 startController = EnterPasswordViewController()
             }
         

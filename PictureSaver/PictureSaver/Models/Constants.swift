@@ -20,12 +20,14 @@ public enum Numbers: String {
 }
 
 public enum AppStrings: String {
+    case emptyText = ""
     case enterPinText = "Please, enter the PIN"
     case defaultPinTextState = "○ ○ ○ ○"
     case firstSymbolEnteringTextState = "● ○ ○ ○"
     case secondSymbolEnteringTextState = "● ● ○ ○"
     case thirdSymbolEnteringTextState = "● ● ● ○"
     case fourthSymbolEnteringTextState = "● ● ● ●"
+    case maskedPinSymbol = "●"
     case createNewPin = "Please, create new PIN"
     case confirmNewPin = "Confirm new PIN"
     case pinCorrect = "PIN is correct"
@@ -34,6 +36,7 @@ public enum AppStrings: String {
     case confirmPin = "Ok"
     case addPhotoButtonTitle = "+"
     case libraryButtonTitle = "All pictures"
+    case favoritePictures = "Favorites"
     case addPictureScreenTitle = "Add picture"
     case libraryScreenTitle = "Library"
     case cameraAction = "Take a photo"
@@ -41,38 +44,10 @@ public enum AppStrings: String {
     case cancelAction = "Cancel"
     case addPictureAlertTitle = "Please, choose an action"
     case pictureInformationPlaceholder = "Add additional info..."
-    case previousPictureButtonTitle = "< Prev"
-    case nextPictureButtonTitle = "Next >"
-}
-
-public enum ButtonsParams: CGFloat{
-    case buttonSize = 72
-    case addPictureButtonSizeWidthAndHeight = 84
-    case allPicturesButtonWidth = 160
-    case allPicturesButtonHeight = 32
-    case allPicturesButtonCornerRadius = 8
-    case verticalSpacing = 16
-    case horizontalSpacing = 24
-    case allPicturesButtonVerticalSpacing = 36
-    case allPicturesButtonHorizontalSpacing = 20
-    case backButtonSize = 64
-}
-
-public enum Offsets: CGFloat {
-    case topOffset = 100
-    case bottomOffset = 24
-    case offsetBetweenTextAndPin = 12
-    case offsetBetweenNewAndConfirmPin = 60
-    case textFieldLeftAndRightOffset = 36
-}
-
-public enum PinCreationStep {
-    case create
-    case confirm
-}
-
-public enum PinLength: Int {
-    case four = 4
+    case previousPictureButtonTitle = "↫"
+    case nextPictureButtonTitle = "↬"
+    case notAddedToFavorite = "♡"
+    case addedToFavorite = "♥"
 }
 
 public enum ElementsColors {
@@ -110,6 +85,38 @@ public enum ElementsColors {
     }
 }
 
+
+public enum ButtonsParams: CGFloat{
+    case buttonSize = 72
+    case addPictureButtonSizeWidthAndHeight = 84
+    case allPicturesButtonWidth = 160
+    case allPicturesButtonHeight = 32
+    case allPicturesButtonCornerRadius = 8
+    case verticalSpacing = 16
+    case horizontalSpacing = 24
+    case allPicturesButtonVerticalSpacing = 36
+    case allPicturesButtonHorizontalSpacing = 20
+    case backButtonSize = 64
+}
+
+public enum Offsets: CGFloat {
+    case topOffset = 100
+    case bottomOffset = 24
+    case offsetBetweenTextAndPin = 12
+    case offsetBetweenNewAndConfirmPin = 60
+    case textFieldLeftAndRightOffset = 36
+}
+
+public enum PinCreationStep {
+    case create
+    case confirm
+}
+
+public enum PinLength: Int {
+    case four = 4
+}
+
+
 public enum ImageViewParams: CGFloat{
     case widthAndHeightBeforeAddPicture = 84
     case widthAndHeightAfterAddPicture = 260
@@ -126,3 +133,38 @@ public enum PrevAndNextButtonsParams: CGFloat{
     case previousAndNextButtonHeight = 36
 }
 
+public enum FavoriteButtonsParams: CGFloat{
+    case widthAndHeight = 36
+}
+
+public enum FontSize{
+    case screenNameTextSize
+    case backButtonTextSize
+    case addPictureLabelTextSize
+    case mainScreenButtonsTextSize
+    case numberPadTextSize
+    case pinLabelsTextSize
+    case prevAndNextButtonTextSize
+    case favoriteButtonTextSize
+    
+    var size: CGFloat {
+        switch self {
+        case .screenNameTextSize:
+            return 28
+        case .backButtonTextSize:
+            return 32
+        case .addPictureLabelTextSize:
+            return 48
+        case .mainScreenButtonsTextSize:
+            return 24
+        case .numberPadTextSize:
+            return 24
+        case .pinLabelsTextSize:
+            return 24
+        case .prevAndNextButtonTextSize:
+            return 24
+        case .favoriteButtonTextSize:
+            return 32
+        }
+    }
+}

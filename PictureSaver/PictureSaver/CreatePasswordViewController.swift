@@ -11,7 +11,6 @@ import SnapKit
 
 class CreatePasswordViewController: UIViewController {
     let saveLoadManager = SaveLoadManager()
-    //MARK: add elements numberpad
     private let numberContainer = UIView()
     private let firstLineOfNumbers = UIView()
     private let secondLineOfNumbers = UIView()
@@ -22,7 +21,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.one.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -31,7 +30,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.two.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -40,7 +39,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.three.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -49,7 +48,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.four.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -58,7 +57,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.five.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -67,7 +66,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.six.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -76,7 +75,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.seven.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -85,7 +84,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.eight.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -94,7 +93,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.nine.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -103,7 +102,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(Numbers.zero.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -112,7 +111,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(AppStrings.clearPinButtonTuttle.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.numbersButtonColor.color
         return button
@@ -121,7 +120,7 @@ class CreatePasswordViewController: UIViewController {
         let button = UIButton()
         button.setTitle(AppStrings.confirmPin.rawValue, for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         button.layer.borderColor = UIColor.white.cgColor
@@ -133,7 +132,7 @@ class CreatePasswordViewController: UIViewController {
     private let pinLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: FontSize.pinLabelsTextSize.size, weight: .bold)
         label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.defaultPinTextState.rawValue
         return label
@@ -141,7 +140,7 @@ class CreatePasswordViewController: UIViewController {
     private let confirmPinLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: FontSize.pinLabelsTextSize.size, weight: .bold)
         label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.defaultPinTextState.rawValue
         return label
@@ -149,7 +148,7 @@ class CreatePasswordViewController: UIViewController {
     private let pinLabelText: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = UIFont.systemFont(ofSize: FontSize.pinLabelsTextSize.size)
         label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.createNewPin.rawValue
         return label
@@ -157,7 +156,7 @@ class CreatePasswordViewController: UIViewController {
     private let pinLabelConfirmText: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = UIFont.systemFont(ofSize: FontSize.pinLabelsTextSize.size)
         label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.confirmNewPin.rawValue
         return label
@@ -335,10 +334,8 @@ class CreatePasswordViewController: UIViewController {
     @objc private func numberButtonTapped(_ sender: UIButton) {
         guard let number = sender.currentTitle else { return }
         guard enteredPin.count < maxPinLength else { return }
-        
         enteredPin.append(number)
         updatePinLabels()
-        
         if enteredPin.count == maxPinLength {
             pinLabelConfirmText.isHidden = false
             createAndConfirmPin()
@@ -346,14 +343,11 @@ class CreatePasswordViewController: UIViewController {
     }
     
     @objc private func clearButtonTapped(_ sender: UIButton) {
-        
         step = .create
-        firstPin = ""
-        enteredPin = ""
+        firstPin = AppStrings.emptyText.rawValue
+        enteredPin = AppStrings.emptyText.rawValue
         hiddenConfirmPin()
         defaultPinState()
-        //defaultPinState()
-        //updatePinLabels()
     }
     
     @objc private func okButtonTapped(_ sender: UIButton) {
@@ -362,9 +356,9 @@ class CreatePasswordViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    private var step: PinCreationStep = .create
-    private var firstPin = ""
-    private var enteredPin = ""
+    private var step = PinCreationStep.create
+    private var firstPin = AppStrings.emptyText.rawValue
+    private var enteredPin = AppStrings.emptyText.rawValue
     private let maxPinLength = PinLength.four.rawValue
     private func updatePinLabels() {
         switch step {
@@ -398,7 +392,7 @@ class CreatePasswordViewController: UIViewController {
         switch step {
         case .create:
             firstPin = enteredPin
-            enteredPin = ""
+            enteredPin = AppStrings.emptyText.rawValue
             step = .confirm
         case .confirm:
             if enteredPin == firstPin {
@@ -412,11 +406,12 @@ class CreatePasswordViewController: UIViewController {
     }
     
     private func maskedText(for count: Int) -> String {
-        return String(repeating: "●", count: count)
+        return String(repeating: AppStrings.maskedPinSymbol.rawValue, count: count)
     }
     
     private func savePin() {
-        saveLoadManager.save(firstPin)
+        //saveLoadManager.save(firstPin)
+        saveLoadManager.savePinToKeychain(firstPin)
     }
     
     private func hiddenConfirmPin() {

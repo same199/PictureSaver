@@ -1,21 +1,20 @@
 //
-//  AllPictureViewController.swift
+//  FavoritesPicturesViewController.swift
 //  PictureSaver
 //
-//  Created by Artsiom Stulba on 20.12.25.
+//  Created by Artsiom Stulba on 4.01.26.
 //
-
 
 import UIKit
 import SnapKit
 
-class AllPictureViewController: UIViewController {
-    
+
+class FavoritesPicturesViewController: UIViewController {
+    private let buttonsContainer = UIView()
     private let saveLoadManager = SaveLoadManager()
-    private var imageNamesArray: [String] = []
+    private var favoritesNamesArray: [String] = []
     private var currentIndex: Int = 0
     private let containerView = UIView()
-    private let buttonsContainer = UIView()
     private let backButton: UIButton = {
         let button = UIButton()
         button.setTitle(AppStrings.clearPinButtonTuttle.rawValue, for: .normal)
@@ -24,12 +23,12 @@ class AllPictureViewController: UIViewController {
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
     }()
-    private let allPictureScreenName: UILabel = {
+    private let favoritesScreenName: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: FontSize.screenNameTextSize.size)
         label.textColor = ElementsColors.pinTextColor.color
-        label.text = AppStrings.libraryScreenTitle.rawValue
+        label.text = AppStrings.favoritePictures.rawValue
         return label
     }()
     private let pictureView: UIImageView = {
@@ -69,28 +68,21 @@ class AllPictureViewController: UIViewController {
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
     }()
-    private let favoriteButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(AppStrings.notAddedToFavorite.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.favoriteButtonTextSize.size)
-        button.backgroundColor = ElementsColors.confirmButtonColor.color
-        return button
-    }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        configureNotifications()
+        
     }
     
     private func configureUI() {
-        imageNamesArray = saveLoadManager.loadImageNames()
+        favoritesNamesArray = saveLoadManager.loadFavoritesImageNames()
         view.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         containerView.backgroundColor = ElementsColors.backgroundColor.color
+        
         containerView.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(ButtonsParams.allPicturesButtonHorizontalSpacing.rawValue)
@@ -98,8 +90,9 @@ class AllPictureViewController: UIViewController {
             make.width.height.equalTo(ButtonsParams.backButtonSize.rawValue)
         }
         backButton.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
-        containerView.addSubview(allPictureScreenName)
-        allPictureScreenName.snp.makeConstraints { make in
+        
+        containerView.addSubview(favoritesScreenName)
+        favoritesScreenName.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalTo(backButton)
         }
@@ -108,29 +101,18 @@ class AllPictureViewController: UIViewController {
             make.center.equalToSuperview()
             make.width.height.equalTo(ImageViewParams.widthAndHeightAfterAddPicture.rawValue)
         }
-        if imageNamesArray.isEmpty{
+        if favoritesNamesArray.isEmpty{
             pictureView.image = UIImage(named: "emptyLibrary")
         }else
         {
-            currentIndex = imageNamesArray.count - 1
+            currentIndex = favoritesNamesArray.count - 1
             showImage(at: currentIndex)
             
         }
-        containerView.addSubview(infoAboutPictureTextField)
-        infoAboutPictureTextField.snp.makeConstraints { make in
-            make.top.equalTo(pictureView.snp.bottom).offset(Offsets.bottomOffset.rawValue)
-            make.left.equalToSuperview().offset(Offsets.textFieldLeftAndRightOffset.rawValue)
-            make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
-            make.centerX.equalTo(pictureView)
-            make.height.equalTo(TextFieldParams.height.rawValue)
-        }
-        infoAboutPictureTextField.delegate = self
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboardTap))
-        containerView.addGestureRecognizer(tapRecognizer)
 
         containerView.addSubview(buttonsContainer)
         buttonsContainer.snp.makeConstraints { make in
-            make.top.equalTo(infoAboutPictureTextField.snp.bottom).offset(Offsets.bottomOffset.rawValue)
+            make.top.equalTo(pictureView.snp.bottom).offset(Offsets.bottomOffset.rawValue)
             make.left.equalToSuperview().offset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.centerX.equalTo(pictureView)
@@ -151,74 +133,16 @@ class AllPictureViewController: UIViewController {
         }
         nextPictureButton.addTarget(self, action: #selector(nextPictureTapped),for: .touchUpInside)
         
-        buttonsContainer.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.centerX.equalTo(infoAboutPictureTextField)
-            make.width.height.equalTo(FavoriteButtonsParams.widthAndHeight.rawValue)
-        }
-        favoriteButton.addTarget(self, action: #selector(addOrDeletoFromFavorite), for: .touchUpInside)
     }
-
-
-    private func goBack() {
-        if currentIndex >= 0 && currentIndex < imageNamesArray.count {
-            let imageName = imageNamesArray[currentIndex]
-            saveLoadManager.savePictureText(infoAboutPictureTextField.text ?? "",for: imageName)
-        }
-
-        navigationController?.popViewController(animated: true)
-    }
-
     
+    private func goBack(){
+            navigationController?.popViewController(animated: true)
+        }
     @objc private func backButtonTapped(_ sender: UIButton) {
         goBack()
     }
-    
-    private func configureNotifications(){
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow(_:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide(_:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil)
-    }
-    
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
-        
-        containerView.snp.updateConstraints { make in
-            make.bottom.equalToSuperview().inset(frame.height)
-        }
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-        
-        containerView.snp.updateConstraints { make in
-            make.bottom.equalToSuperview()
-        }
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    @objc private func closeKeyboardTap() {
-        infoAboutPictureTextField.endEditing(true)
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     @objc private func nextPictureTapped() {
-        guard currentIndex < imageNamesArray.count - 1 else { return }
+        guard currentIndex < favoritesNamesArray.count - 1 else { return }
         currentIndex += 1
         showImage(at: currentIndex)
     }
@@ -228,51 +152,17 @@ class AllPictureViewController: UIViewController {
         currentIndex -= 1
         showImage(at: currentIndex)
     }
+    
     private func showImage(at index: Int) {
-        guard index >= 0, index < imageNamesArray.count else { return }
-        let imageName = imageNamesArray[index]
+        guard index >= 0, index < favoritesNamesArray.count else { return }
+        let imageName = favoritesNamesArray[index]
         if let image = saveLoadManager.loadImage(filename: imageName) {
             pictureView.image = image
             infoAboutPictureTextField.text =
                     saveLoadManager.loadPictureText(for: imageName)
         }
-        updateFavoriteButtonState()
     }
     
-    private func updateFavoriteButtonState() {
-        guard imageNamesArray.indices.contains(currentIndex) else { return }
-
-            let imageName = imageNamesArray[currentIndex]
-            let favorites = saveLoadManager.loadFavoritesImageNames()
-            let isFavorite = favorites.contains(imageName)
-
-            let title = isFavorite
-                ? AppStrings.addedToFavorite.rawValue
-                : AppStrings.notAddedToFavorite.rawValue
-
-            favoriteButton.setTitle(title, for: .normal)
-    }
-    @objc private func addOrDeletoFromFavorite() {
-        guard imageNamesArray.indices.contains(currentIndex) else { return }
-
-            let imageName = imageNamesArray[currentIndex]
-            let favorites = saveLoadManager.loadFavoritesImageNames()
-
-            if favorites.contains(imageName) {
-                saveLoadManager.removeFavoritesImageName(imageName)
-            } else {
-                saveLoadManager.saveFavoritiesImgeName(imageName)
-            }
-
-            updateFavoriteButtonState()
-        
-    }
 }
 
-extension AllPictureViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
-        textField.endEditing(true)
-        return true
-    }
-}
 

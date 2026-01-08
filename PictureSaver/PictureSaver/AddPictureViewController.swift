@@ -19,7 +19,7 @@ class AddPictureViewController: UIViewController {
         let button = UIButton()
         button.setTitle(AppStrings.clearPinButtonTuttle.rawValue, for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 32)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.backButtonTextSize.size)
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
     }()
@@ -27,7 +27,7 @@ class AddPictureViewController: UIViewController {
     private let addPictureScreenName: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 28)
+        label.font = UIFont.systemFont(ofSize: FontSize.screenNameTextSize.size)
         label.textColor = ElementsColors.pinTextColor.color
         label.text = AppStrings.addPictureScreenTitle.rawValue
         return label
@@ -51,7 +51,7 @@ class AddPictureViewController: UIViewController {
     private let addPictireLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 48)
+        label.font = UIFont.boldSystemFont(ofSize: FontSize.addPictureLabelTextSize.size)
         label.textColor = ElementsColors.backgroundColor.color
         label.text = AppStrings.addPhotoButtonTitle.rawValue
         return label
