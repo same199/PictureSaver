@@ -135,6 +135,7 @@ public enum PrevAndNextButtonsParams: CGFloat{
 
 public enum FavoriteButtonsParams: CGFloat{
     case widthAndHeight = 36
+    
 }
 
 public enum FontSize{
