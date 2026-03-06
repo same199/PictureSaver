@@ -78,6 +78,15 @@ class AllPictureViewController: UIViewController {
         return button
     }()
     
+    private let deleteImageButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(AppStrings.deleteImage.rawValue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.favoriteButtonTextSize.size)
+        button.backgroundColor = ElementsColors.confirmButtonColor.color
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -103,6 +112,14 @@ class AllPictureViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.centerY.equalTo(backButton)
         }
+        
+        containerView.addSubview(deleteImageButton)
+        deleteImageButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
+            make.top.equalTo(allPictureScreenName.snp.bottom).offset(Offsets.offsetBetweenDelAndScreenName.rawValue)
+            make.width.height.equalTo(ButtonsParams.deleteImageButtonSize.rawValue)
+        }
+        deleteImageButton.addTarget(self, action: #selector(deleteImageTapped), for: .touchUpInside)
         containerView.addSubview(pictureView)
         pictureView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -110,6 +127,10 @@ class AllPictureViewController: UIViewController {
         }
         if imageNamesArray.isEmpty{
             pictureView.image = UIImage(named: "emptyLibrary")
+            infoAboutPictureTextField.isHidden = true
+            favoriteButton.isHidden = true
+            previousPictureButton.isHidden = true
+            nextPictureButton.isHidden = true
         }else
         {
             currentIndex = imageNamesArray.count - 1
@@ -218,14 +239,16 @@ class AllPictureViewController: UIViewController {
     }
     
     @objc private func nextPictureTapped() {
-        guard currentIndex < imageNamesArray.count - 1 else { return }
-        currentIndex += 1
+        guard !imageNamesArray.isEmpty else { return }
+
+        currentIndex = (currentIndex + 1) % imageNamesArray.count
         showImage(at: currentIndex)
     }
     
     @objc private func previousPictureTapped() {
-        guard currentIndex > 0 else { return }
-        currentIndex -= 1
+        guard !imageNamesArray.isEmpty else { return }
+
+        currentIndex = (currentIndex - 1 + imageNamesArray.count) % imageNamesArray.count
         showImage(at: currentIndex)
     }
     private func showImage(at index: Int) {
@@ -237,6 +260,34 @@ class AllPictureViewController: UIViewController {
                     saveLoadManager.loadPictureText(for: imageName)
         }
         updateFavoriteButtonState()
+    }
+    
+    private func deleteImage(at index: Int) {
+        guard index >= 0, index < imageNamesArray.count else { return }
+
+        let imageName = imageNamesArray[index]
+
+        // удаляем из storage
+        saveLoadManager.deleteImage(named: imageName)
+
+        // удаляем из локального массива
+        imageNamesArray.remove(at: index)
+
+        // корректируем индекс
+        if currentIndex >= imageNamesArray.count {
+            currentIndex = max(imageNamesArray.count - 1, 0)
+        }
+
+        // обновляем экран
+        if imageNamesArray.isEmpty {
+            pictureView.image = UIImage(named: "emptyLibrary")
+            infoAboutPictureTextField.isHidden = true
+            favoriteButton.isHidden = true
+            previousPictureButton.isHidden = true
+            nextPictureButton.isHidden = true
+        } else {
+            showImage(at: currentIndex)
+        }
     }
     
     private func updateFavoriteButtonState() {
@@ -263,9 +314,11 @@ class AllPictureViewController: UIViewController {
             } else {
                 saveLoadManager.saveFavoritiesImgeName(imageName)
             }
-
             updateFavoriteButtonState()
-        
+    }
+    
+    @objc private func deleteImageTapped() {
+        deleteImage(at: currentIndex)
     }
 }
 

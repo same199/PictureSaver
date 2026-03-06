@@ -68,6 +68,15 @@ class FavoritesPicturesViewController: UIViewController {
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
     }()
+    private let favoriteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(AppStrings.addedToFavorite.rawValue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.favoriteButtonTextSize.size)
+        button.backgroundColor = ElementsColors.confirmButtonColor.color
+        return button
+    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,13 +110,17 @@ class FavoritesPicturesViewController: UIViewController {
             make.center.equalToSuperview()
             make.width.height.equalTo(ImageViewParams.widthAndHeightAfterAddPicture.rawValue)
         }
-        if favoritesNamesArray.isEmpty{
+        if favoritesNamesArray.isEmpty {
             pictureView.image = UIImage(named: "emptyLibrary")
-        }else
-        {
+            favoriteButton.isHidden = true
+            previousPictureButton.isHidden = true
+            nextPictureButton.isHidden = true
+        } else {
+            favoriteButton.isHidden = false
+            previousPictureButton.isHidden = false
+            nextPictureButton.isHidden = false
             currentIndex = favoritesNamesArray.count - 1
             showImage(at: currentIndex)
-            
         }
 
         containerView.addSubview(buttonsContainer)
@@ -133,6 +146,12 @@ class FavoritesPicturesViewController: UIViewController {
         }
         nextPictureButton.addTarget(self, action: #selector(nextPictureTapped),for: .touchUpInside)
         
+        buttonsContainer.addSubview(favoriteButton)
+        favoriteButton.snp.makeConstraints { make in
+            make.centerX.equalTo(pictureView)
+            make.width.height.equalTo(FavoriteButtonsParams.widthAndHeight.rawValue)
+        }
+        favoriteButton.addTarget(self, action: #selector(addOrDeletoFromFavorite), for: .touchUpInside)
     }
     
     private func goBack(){
@@ -160,6 +179,47 @@ class FavoritesPicturesViewController: UIViewController {
             pictureView.image = image
             infoAboutPictureTextField.text =
                     saveLoadManager.loadPictureText(for: imageName)
+        }
+    }
+    
+    private func updateFavoriteButtonState() {
+        guard favoritesNamesArray.indices.contains(currentIndex) else { return }
+
+        let imageName = favoritesNamesArray[currentIndex]
+        let favorites = saveLoadManager.loadFavoritesImageNames()
+        let isFavorite = favorites.contains(imageName)
+
+        let title = isFavorite
+            ? AppStrings.addedToFavorite.rawValue
+            : AppStrings.notAddedToFavorite.rawValue
+
+        favoriteButton.setTitle(title, for: .normal)
+    }
+    
+    @objc private func addOrDeletoFromFavorite() {
+        guard favoritesNamesArray.indices.contains(currentIndex) else { return }
+
+        let imageName = favoritesNamesArray[currentIndex]
+
+        // удаляем из UserDefaults
+        saveLoadManager.removeFavoritesImageName(imageName)
+
+        // удаляем из локального массива
+        favoritesNamesArray.remove(at: currentIndex)
+
+        // корректируем индекс
+        if currentIndex >= favoritesNamesArray.count {
+            currentIndex = max(favoritesNamesArray.count - 1, 0)
+        }
+
+        // обновляем экран
+        if favoritesNamesArray.isEmpty {
+            pictureView.image = UIImage(named: "emptyLibrary")
+            favoriteButton.isHidden = true
+            previousPictureButton.isHidden = true
+            nextPictureButton.isHidden = true
+        } else {
+            showImage(at: currentIndex)
         }
     }
     

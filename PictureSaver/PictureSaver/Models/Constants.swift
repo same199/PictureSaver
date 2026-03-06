@@ -48,6 +48,7 @@ public enum AppStrings: String {
     case nextPictureButtonTitle = "↬"
     case notAddedToFavorite = "♡"
     case addedToFavorite = "♥"
+    case deleteImage = "✕"
 }
 
 public enum ElementsColors {
@@ -97,6 +98,7 @@ public enum ButtonsParams: CGFloat{
     case allPicturesButtonVerticalSpacing = 36
     case allPicturesButtonHorizontalSpacing = 20
     case backButtonSize = 64
+    case deleteImageButtonSize = 25
 }
 
 public enum Offsets: CGFloat {
@@ -105,6 +107,7 @@ public enum Offsets: CGFloat {
     case offsetBetweenTextAndPin = 12
     case offsetBetweenNewAndConfirmPin = 60
     case textFieldLeftAndRightOffset = 36
+    case offsetBetweenDelAndScreenName = 8
 }
 
 public enum PinCreationStep {

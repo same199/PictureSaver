@@ -14,7 +14,7 @@ class MainScreenViewController: UIViewController {
         let button = UIButton()
         button.setTitle(AppStrings.addPhotoButtonTitle.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.addPictureLabelTextSize.rawValue)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.addPictureLabelTextSize.size)
         button.layer.cornerRadius = ButtonsParams.addPictureButtonSizeWidthAndHeight.rawValue / 2
         button.backgroundColor = ElementsColors.addPictureButtonColor.color
         return button
@@ -23,7 +23,7 @@ class MainScreenViewController: UIViewController {
         let button = UIButton()
         button.setTitle(AppStrings.libraryButtonTitle.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.mainScreenButtonsTextSize.rawValue)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.mainScreenButtonsTextSize.size)
         button.layer.cornerRadius = ButtonsParams.allPicturesButtonCornerRadius.rawValue
         button.backgroundColor = ElementsColors.addPictureButtonColor.color
         return button
@@ -32,7 +32,7 @@ class MainScreenViewController: UIViewController {
         let button = UIButton()
         button.setTitle(AppStrings.favoritePictures.rawValue, for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.mainScreenButtonsTextSize.rawValue)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.mainScreenButtonsTextSize.size)
         button.layer.cornerRadius = ButtonsParams.allPicturesButtonCornerRadius.rawValue
         button.backgroundColor = ElementsColors.addPictureButtonColor.color
         return button

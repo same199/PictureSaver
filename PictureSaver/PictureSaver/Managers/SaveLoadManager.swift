@@ -97,5 +97,32 @@ final class SaveLoadManager {
         defaults.set(images, forKey: Keys.favoriteImagesName.rawValue)
     }
     
+    func deleteImage(named name: String) {
+        
+        // 1. Удаляем из массива всех картинок
+        var images = defaults.stringArray(forKey: Keys.imageName.rawValue) ?? []
+        images.removeAll { $0 == name }
+        defaults.set(images, forKey: Keys.imageName.rawValue)
+        
+        
+        // 2. Удаляем описание
+        var dict = defaults.dictionary(forKey: Keys.pictureInfo.rawValue) as? [String: String] ?? [:]
+        dict.removeValue(forKey: name)
+        defaults.set(dict, forKey: Keys.pictureInfo.rawValue)
+        
+        
+        // 3. Удаляем из избранного
+        var favorites = defaults.stringArray(forKey: Keys.favoriteImagesName.rawValue) ?? []
+        favorites.removeAll { $0 == name }
+        defaults.set(favorites, forKey: Keys.favoriteImagesName.rawValue)
+        
+        
+        // 4. Удаляем сам файл картинки
+        if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = directory.appendingPathComponent(name)
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+    }
+    
 }
 
