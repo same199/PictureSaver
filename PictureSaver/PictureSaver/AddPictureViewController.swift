@@ -17,8 +17,12 @@ class AddPictureViewController: UIViewController {
     private var selectedImage: UIImage?
     private let backButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.clearPinButtonTuttle.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .medium)
+        let image = UIImage(systemName: "chevron.backward", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.backButtonTextSize.size)
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button

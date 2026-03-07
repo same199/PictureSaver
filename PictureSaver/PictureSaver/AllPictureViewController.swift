@@ -18,8 +18,12 @@ class AllPictureViewController: UIViewController {
     private let buttonsContainer = UIView()
     private let backButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.clearPinButtonTuttle.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .medium)
+        let image = UIImage(systemName: "chevron.backward", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.backButtonTextSize.size)
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
@@ -51,8 +55,12 @@ class AllPictureViewController: UIViewController {
     }()
     private let previousPictureButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.previousPictureButtonTitle.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .semibold)
+        let image = UIImage(systemName: "chevron.backward", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.prevAndNextButtonTextSize.size)
         button.contentHorizontalAlignment = .left
         button.titleLabel?.textAlignment = .left
@@ -61,8 +69,12 @@ class AllPictureViewController: UIViewController {
     }()
     private let nextPictureButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.nextPictureButtonTitle.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .semibold)
+        let image = UIImage(systemName: "chevron.right", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.prevAndNextButtonTextSize.size)
         button.contentHorizontalAlignment = .right
         button.titleLabel?.textAlignment = .right
@@ -80,8 +92,12 @@ class AllPictureViewController: UIViewController {
     
     private let deleteImageButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.deleteImage.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .medium)
+        let image = UIImage(systemName: "trash", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.favoriteButtonTextSize.size)
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button

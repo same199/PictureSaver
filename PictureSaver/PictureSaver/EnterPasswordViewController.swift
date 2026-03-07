@@ -109,8 +109,12 @@ class EnterPasswordViewController: UIViewController {
     }()
     private let clearButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.clearPinButtonTuttle.rawValue, for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.numberPadTextSize.size,
+                weight: .medium)
+        let image = UIImage(systemName: "delete.left", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .black
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.numberPadTextSize.size)
         button.layer.cornerRadius = ButtonsParams.buttonSize.rawValue / 2
         button.backgroundColor = ElementsColors.clearButtonColor.color
