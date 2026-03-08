@@ -129,12 +129,11 @@ public enum TextFieldParams: CGFloat{
 }
 
 public enum PrevAndNextButtonsParams: CGFloat{
-    case previousAndNextButtonWidth = 120
-    case previousAndNextButtonHeight = 36
+    case previousAndNextButtonWidthAndHeight = 40
 }
 
 public enum FavoriteButtonsParams: CGFloat{
-    case widthAndHeight = 36
+    case widthAndHeight = 40
     
 }
 

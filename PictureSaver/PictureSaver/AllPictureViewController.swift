@@ -94,7 +94,7 @@ class AllPictureViewController: UIViewController {
         let button = UIButton()
         let config = UIImage.SymbolConfiguration(
                 pointSize: FontSize.prevAndNextButtonTextSize.size,
-                weight: .medium)
+                weight: .semibold)
         let image = UIImage(systemName: "trash", withConfiguration: config)
             button.setImage(image, for: .normal)
         button.tintColor = .white
@@ -129,12 +129,6 @@ class AllPictureViewController: UIViewController {
             make.centerY.equalTo(backButton)
         }
         
-        containerView.addSubview(deleteImageButton)
-        deleteImageButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
-            make.top.equalTo(allPictureScreenName.snp.bottom).offset(Offsets.offsetBetweenDelAndScreenName.rawValue)
-            make.width.height.equalTo(ButtonsParams.deleteImageButtonSize.rawValue)
-        }
         deleteImageButton.addTarget(self, action: #selector(deleteImageTapped), for: .touchUpInside)
         containerView.addSubview(pictureView)
         pictureView.snp.makeConstraints { make in
@@ -147,6 +141,7 @@ class AllPictureViewController: UIViewController {
             favoriteButton.isHidden = true
             previousPictureButton.isHidden = true
             nextPictureButton.isHidden = true
+            deleteImageButton.isHidden = true
         }else
         {
             currentIndex = imageNamesArray.count - 1
@@ -171,29 +166,55 @@ class AllPictureViewController: UIViewController {
             make.left.equalToSuperview().offset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.centerX.equalTo(pictureView)
-            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
+            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
         }
-        buttonsContainer.addSubview(previousPictureButton)
-        previousPictureButton.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidth.rawValue)
-            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
-        }
+//        buttonsContainer.addSubview(previousPictureButton)
+//        previousPictureButton.snp.makeConstraints { make in
+//            make.left.equalToSuperview()
+//            make.centerY.equalToSuperview()
+//            make.width.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
+//        }
         previousPictureButton.addTarget(self, action: #selector(previousPictureTapped),for: .touchUpInside)
-        buttonsContainer.addSubview(nextPictureButton)
-        nextPictureButton.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.width.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidth.rawValue)
-            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
-        }
+       
+//        buttonsContainer.addSubview(favoriteButton)
+//        favoriteButton.snp.makeConstraints { make in
+//            make.left.equalTo(previousPictureButton.snp.right).offset(16)
+//            make.centerY.equalToSuperview()
+//            make.width.height.equalTo(FavoriteButtonsParams.widthAndHeight.rawValue)
+//        }
+        favoriteButton.addTarget(self, action: #selector(addOrDeletoFromFavorite), for: .touchUpInside)
+//        buttonsContainer.addSubview(deleteImageButton)
+//        deleteImageButton.snp.makeConstraints { make in
+//            make.left.equalTo(favoriteButton.snp.right).offset(16)
+//            make.centerY.equalToSuperview()
+//            make.width.height.equalTo(ButtonsParams.deleteImageButtonSize.rawValue)
+//        }
+//        buttonsContainer.addSubview(nextPictureButton)
+//        nextPictureButton.snp.makeConstraints { make in
+//            make.left.equalTo(deleteImageButton.snp.right).offset(16)
+//            make.right.equalToSuperview()
+//            make.centerY.equalToSuperview()
+//            make.width.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
+//        }
         nextPictureButton.addTarget(self, action: #selector(nextPictureTapped),for: .touchUpInside)
         
-        buttonsContainer.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.centerX.equalTo(infoAboutPictureTextField)
-            make.width.height.equalTo(FavoriteButtonsParams.widthAndHeight.rawValue)
+        let stack = UIStackView(arrangedSubviews: [
+            previousPictureButton,
+            favoriteButton,
+            deleteImageButton,
+            nextPictureButton
+        ])
+
+        stack.axis = .horizontal
+        stack.spacing = 36
+        stack.alignment = .center
+        stack.distribution = .equalCentering
+
+        buttonsContainer.addSubview(stack)
+
+        stack.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
-        favoriteButton.addTarget(self, action: #selector(addOrDeletoFromFavorite), for: .touchUpInside)
     }
 
 
@@ -301,6 +322,7 @@ class AllPictureViewController: UIViewController {
             favoriteButton.isHidden = true
             previousPictureButton.isHidden = true
             nextPictureButton.isHidden = true
+            deleteImageButton.isHidden = true
         } else {
             showImage(at: currentIndex)
         }

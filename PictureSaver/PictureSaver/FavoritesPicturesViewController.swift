@@ -141,28 +141,27 @@ class FavoritesPicturesViewController: UIViewController {
             make.left.equalToSuperview().offset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.right.equalToSuperview().inset(Offsets.textFieldLeftAndRightOffset.rawValue)
             make.centerX.equalTo(pictureView)
-            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
+            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
         }
-        buttonsContainer.addSubview(previousPictureButton)
-        previousPictureButton.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidth.rawValue)
-            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
+        
+        let stack = UIStackView(arrangedSubviews: [
+            previousPictureButton,
+            favoriteButton,
+            nextPictureButton
+        ])
+
+        stack.axis = .horizontal
+        stack.spacing = 36
+        stack.alignment = .center
+        stack.distribution = .equalCentering
+
+        buttonsContainer.addSubview(stack)
+
+        stack.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         previousPictureButton.addTarget(self, action: #selector(previousPictureTapped),for: .touchUpInside)
-        buttonsContainer.addSubview(nextPictureButton)
-        nextPictureButton.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.width.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidth.rawValue)
-            make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonHeight.rawValue)
-        }
         nextPictureButton.addTarget(self, action: #selector(nextPictureTapped),for: .touchUpInside)
-        
-        buttonsContainer.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.centerX.equalTo(pictureView)
-            make.width.height.equalTo(FavoriteButtonsParams.widthAndHeight.rawValue)
-        }
         favoriteButton.addTarget(self, action: #selector(addOrDeletoFromFavorite), for: .touchUpInside)
     }
     
