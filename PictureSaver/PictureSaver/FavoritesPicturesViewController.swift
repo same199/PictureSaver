@@ -82,8 +82,12 @@ class FavoritesPicturesViewController: UIViewController {
     }()
     private let favoriteButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.addedToFavorite.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .semibold)
+        let image = UIImage(systemName: "heart.fill", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.favoriteButtonTextSize.size)
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
@@ -200,11 +204,16 @@ class FavoritesPicturesViewController: UIViewController {
         let favorites = saveLoadManager.loadFavoritesImageNames()
         let isFavorite = favorites.contains(imageName)
 
-        let title = isFavorite
-            ? AppStrings.addedToFavorite.rawValue
-            : AppStrings.notAddedToFavorite.rawValue
 
-        favoriteButton.setTitle(title, for: .normal)
+        let symbolName = isFavorite ? "heart.fill" : "heart"
+
+            let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .semibold
+            )
+
+            let image = UIImage(systemName: symbolName, withConfiguration: config)
+            favoriteButton.setImage(image, for: .normal)
     }
     
     @objc private func addOrDeletoFromFavorite() {

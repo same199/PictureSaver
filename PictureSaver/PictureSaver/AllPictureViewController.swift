@@ -83,8 +83,12 @@ class AllPictureViewController: UIViewController {
     }()
     private let favoriteButton: UIButton = {
         let button = UIButton()
-        button.setTitle(AppStrings.notAddedToFavorite.rawValue, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .semibold)
+        let image = UIImage(systemName: "heart", withConfiguration: config)
+            button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: FontSize.favoriteButtonTextSize.size)
         button.backgroundColor = ElementsColors.confirmButtonColor.color
         return button
@@ -129,7 +133,6 @@ class AllPictureViewController: UIViewController {
             make.centerY.equalTo(backButton)
         }
         
-        deleteImageButton.addTarget(self, action: #selector(deleteImageTapped), for: .touchUpInside)
         containerView.addSubview(pictureView)
         pictureView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -168,35 +171,11 @@ class AllPictureViewController: UIViewController {
             make.centerX.equalTo(pictureView)
             make.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
         }
-//        buttonsContainer.addSubview(previousPictureButton)
-//        previousPictureButton.snp.makeConstraints { make in
-//            make.left.equalToSuperview()
-//            make.centerY.equalToSuperview()
-//            make.width.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
-//        }
+
         previousPictureButton.addTarget(self, action: #selector(previousPictureTapped),for: .touchUpInside)
-       
-//        buttonsContainer.addSubview(favoriteButton)
-//        favoriteButton.snp.makeConstraints { make in
-//            make.left.equalTo(previousPictureButton.snp.right).offset(16)
-//            make.centerY.equalToSuperview()
-//            make.width.height.equalTo(FavoriteButtonsParams.widthAndHeight.rawValue)
-//        }
         favoriteButton.addTarget(self, action: #selector(addOrDeletoFromFavorite), for: .touchUpInside)
-//        buttonsContainer.addSubview(deleteImageButton)
-//        deleteImageButton.snp.makeConstraints { make in
-//            make.left.equalTo(favoriteButton.snp.right).offset(16)
-//            make.centerY.equalToSuperview()
-//            make.width.height.equalTo(ButtonsParams.deleteImageButtonSize.rawValue)
-//        }
-//        buttonsContainer.addSubview(nextPictureButton)
-//        nextPictureButton.snp.makeConstraints { make in
-//            make.left.equalTo(deleteImageButton.snp.right).offset(16)
-//            make.right.equalToSuperview()
-//            make.centerY.equalToSuperview()
-//            make.width.height.equalTo(PrevAndNextButtonsParams.previousAndNextButtonWidthAndHeight.rawValue)
-//        }
         nextPictureButton.addTarget(self, action: #selector(nextPictureTapped),for: .touchUpInside)
+        deleteImageButton.addTarget(self, action: #selector(deleteImageTapped), for: .touchUpInside)
         
         let stack = UIStackView(arrangedSubviews: [
             previousPictureButton,
@@ -335,11 +314,15 @@ class AllPictureViewController: UIViewController {
             let favorites = saveLoadManager.loadFavoritesImageNames()
             let isFavorite = favorites.contains(imageName)
 
-            let title = isFavorite
-                ? AppStrings.addedToFavorite.rawValue
-                : AppStrings.notAddedToFavorite.rawValue
+        let symbolName = isFavorite ? "heart.fill" : "heart"
 
-            favoriteButton.setTitle(title, for: .normal)
+            let config = UIImage.SymbolConfiguration(
+                pointSize: FontSize.prevAndNextButtonTextSize.size,
+                weight: .semibold
+            )
+
+            let image = UIImage(systemName: symbolName, withConfiguration: config)
+            favoriteButton.setImage(image, for: .normal)
     }
     @objc private func addOrDeletoFromFavorite() {
         guard imageNamesArray.indices.contains(currentIndex) else { return }
